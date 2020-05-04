@@ -135,7 +135,7 @@ class Parser:
 	def add_op(self):
 		pass
 
-	def mult_op(self):
+	def mult_op(self, level):
 		if self.match('mult'):
 			self.print_with_indent('<times>', level)
 			self.print_with_indent('*', level + 1)
