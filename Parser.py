@@ -61,6 +61,7 @@ class Parser:
 			self.print_with_indent('<write>', level + 1)
 			self.print_with_indent('write', level + 2)
 			self.print_with_indent('<write>', level + 1)
+			self.currentTokenPosition += 1
 			self.expr(level)
 		
 		else:
