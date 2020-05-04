@@ -32,13 +32,46 @@ class Parser:
 			self.print_with_indent('<id>', level)
 			self.print_with_indent(self.tokenValues[self.currentTokenPosition], level + 1)
 			self.print_with_indent('</id>', level)
+			# Next one should be an assign
+			self.currentTokenPosition += 1
+			if self.match('assign'):
+				self.print_with_indent('<assign>', level)
+				self.print_with_indent(self.tokenValues[self.currentTokenPosition], level + 1)
+				self.print_with_indent('</assign>', level)
+				self.currentTokenPosition += 1
+			else:
+				raise Exception()
+			self.expr()
+
+		elif self.match('read'):
+			self.print_with_indent('<read>', level)
+			self.print_with_indent(self.tokenValues[self.currentTokenPosition], level + 1)
+			self.print_with_indent('</read>', level)
+			self.currentTokenPosition += 1
+			if self.match('id'):
+				self.print_with_indent('<id>', level)
+				self.print_with_indent(self.tokenValues[self.currentTokenPosition], level + 1)
+				self.print_with_indent('</id>', level)
+				self.currentTokenPosition += 1
+			else:
+				raise Exception()
+
+		elif self.match('write'):
+			self.print_with_indent('<write>', level)
+			self.print_with_indent('write', level + 1)
+			self.print_with_indent('<write>', level)
+			self.expr(level)
 		
-		self.currentTokenPosition += 1
+		else:
+			raise Exception()
 
 		self.print_with_indent('</stmt>', level)
 
-	def expr(self):
-		pass
+	def expr(self, level):
+		self.print_with_indent('<expr>', level)
+		self.term()
+		self.term_tail()
+		self.print_with_indent('</expr>', level)
 
 	def term(self):
 		#if factor then:
