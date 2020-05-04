@@ -30,15 +30,15 @@ class Parser:
 		self.print_with_indent('<stmt>', level)
 		# If the next token is an id
 		if self.match('id'):
-			self.print_with_indent('<id>', level)
-			self.print_with_indent(self.tokenValues[self.currentTokenPosition], level + 1)
-			self.print_with_indent('</id>', level)
+			self.print_with_indent('<id>', level + 1)
+			self.print_with_indent(self.tokenValues[self.currentTokenPosition], level + 2)
+			self.print_with_indent('</id>', level + 1)
 			# Next one should be an assign
 			self.currentTokenPosition += 1
 			if self.match('assign'):
-				self.print_with_indent('<assign>', level)
-				self.print_with_indent(self.tokenValues[self.currentTokenPosition], level + 1)
-				self.print_with_indent('</assign>', level)
+				self.print_with_indent('<assign>', level + 1)
+				self.print_with_indent(self.tokenValues[self.currentTokenPosition], level + 2)
+				self.print_with_indent('</assign>', level + 1)
 				self.currentTokenPosition += 1
 			else:
 				raise Exception()
@@ -58,9 +58,9 @@ class Parser:
 				raise Exception()
 
 		elif self.match('write'):
-			self.print_with_indent('<write>', level)
-			self.print_with_indent('write', level + 1)
-			self.print_with_indent('<write>', level)
+			self.print_with_indent('<write>', level + 1)
+			self.print_with_indent('write', level + 2)
+			self.print_with_indent('<write>', level + 1)
 			self.expr(level)
 		
 		else:
