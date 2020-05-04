@@ -20,7 +20,7 @@ class Parser:
 	def __stmt_list__(self, level: int):
 		self.__print_with_indent__('<stmt_list>', level)
 		# If there is still something left to read
-		if self.currentTokenPosition != len(self.tokenValues) - 1:
+		if self.currentTokenPosition < len(self.tokenValues):
 			self.__stmt__(level + 1)
 			self.__stmt_list__(level + 1)
 		self.__print_with_indent__('</stmt_list>', level)
