@@ -80,6 +80,7 @@ class Parser:
 		self.factor(level + 1)
 		self.fact_tail(level + 1)
 		self.print_with_indent('</term>', level)
+		return True
 
 	def term_tail(self, level: int):
 
@@ -90,10 +91,9 @@ class Parser:
 				self.term_tail(level + 1)
 			else:
 				raise Exception
-		else:
-			return False
-
+			
 		self.print_with_indent('</term_tail>', level)
+		
 
 	def factor(self, level: int):
 		if self.match('lparen'):
