@@ -71,7 +71,7 @@ class Parser:
 
 	# Returns true if the next value matches the value provided
 	def match(self, value):
-		# If we are about to look ahead into out of bounds for the array, error out
+		# If we are about to look ahead into out of bounds for the array, return false
 		try:
 			return self.tokens[self.currentTokenPosition + 1] == value
 		except:
