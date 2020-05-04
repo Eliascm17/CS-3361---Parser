@@ -10,7 +10,8 @@ class Parser:
 	   
 	def parse(self): 
 		print('token list: {0}'.format(self.tokens[:]))
-		self.program(0)
+		print('token values list: {0}'.format(self.tokenValues[:]))
+		# self.program(0)
 	
 	def program(self, level: int):
 		self.print_with_indent('<program>', level)
@@ -73,22 +74,25 @@ class Parser:
 		self.term_tail()
 		self.print_with_indent('</expr>', level)
 
-	def term(self):
-		#if factor then:
-		#	factor()
-		#   factor_tail()
-		#else:
-		#	returnpass
-		pass
+	def term(self, level: int):
 
-	def term_tail(self):
-		#if nothing:
-		#	return
-		#else:
-		#	mult_op()
-		#	term()
-		#	term_tail()
-		pass
+		self.print_with_indent('<term>', level)
+		self.factor(level + 1)
+		self.fact_tail(level + 1)
+		self.print_with_indent('</term>', level)
+
+	def term_tail(self, level: int):
+
+		self.print_with_indent('<term_tail>', level)
+
+		if self.currentTokenPosition < len(self.tokenValues):
+			self.add_op(level + 1)
+			self.term(level + 1)
+			self.term_tail(level + 1)
+		else:
+			return False
+
+		self.print_with_indent('</term_tail>', level)
 
 	def factor(self, level: int):
 		if self.match('lparen'):

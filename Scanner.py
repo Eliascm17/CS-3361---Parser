@@ -1,5 +1,5 @@
 from typing import List
-
+import re
 
 class Scanner:
 
@@ -95,8 +95,9 @@ class Scanner:
                                         break
                                     #do something here if element is a number ex 3.13)
                                     elif len(self.tokens) == 0 or self.tokens[-1] != 'number':
+                                        tokenValue = re.search(r'\((.*?)\)',self.a[k]).group(1)
                                         self.tokens.append('number')
-                                        self.batchList.append(self.a[k])
+                                        self.batchList.append(tokenValue)
                             # to identify if token is a valid id
                             elif self.a[k][i].isalpha():
                                 #do something here if element is a letter (A-Z,a-z,1-9)
