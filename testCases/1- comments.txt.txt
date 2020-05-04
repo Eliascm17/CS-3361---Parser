@@ -1,9 +1,0 @@
-/*
-make sure this line is ignored
-*/
-read
-write
-/*
-make sure this line is ignored too
-*/
-write

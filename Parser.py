@@ -11,7 +11,7 @@ class Parser:
 	def parse(self): 
 		print('token list: {0}'.format(self.tokens[:]))
 		print('token values list: {0}'.format(self.tokenValues[:]))
-		# self.program(0)
+		self.program(0)
 	
 	def program(self, level: int):
 		self.print_with_indent('<program>', level)
