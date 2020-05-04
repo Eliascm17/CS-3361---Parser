@@ -85,10 +85,11 @@ class Parser:
 
 		self.print_with_indent('<term_tail>', level)
 
-		if self.currentTokenPosition < len(self.tokenValues):
-			self.add_op(level + 1)
-			self.term(level + 1)
-			self.term_tail(level + 1)
+		if self.add_op(level + 1):
+			if self.term(level + 1):
+				self.term_tail(level + 1)
+			else:
+				raise Exception
 		else:
 			return False
 
