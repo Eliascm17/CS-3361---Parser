@@ -134,7 +134,6 @@ class Parser:
 			else:
 				raise Exception
 		self.print_with_indent('</fact_tail>', level)
-		pass
 
 	def add_op(self, level: int):
 		if self.match('add'):
