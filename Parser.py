@@ -11,7 +11,10 @@ class Parser:
 	def parse(self): 
 		print('token list: {0}'.format(self.tokens[:]))
 		print('token values list: {0}'.format(self.tokenValues[:]))
-		self.program(0)
+		try:
+			self.program(0)
+		except:
+			raise Exception()
 	
 	def program(self, level: int):
 		self.print_with_indent('<program>', level)
@@ -35,13 +38,16 @@ class Parser:
 			self.print_with_indent('</id>', level + 1)
 			# Next one should be an assign
 			self.currentTokenPosition += 1
+
 			if self.match('assign'):
 				self.print_with_indent('<assign>', level + 1)
-				self.print_with_indent(self.tokenValues[self.currentTokenPosition], level + 2)
+				self.print_with_indent(':=', level + 2)
 				self.print_with_indent('</assign>', level + 1)
 				self.currentTokenPosition += 1
+			
 			else:
 				raise Exception()
+
 			self.expr(level)
 
 		elif self.match('read'):

@@ -8,7 +8,7 @@ def main():
     print('\n')
 
     for i in range(len(testCases)):
-        print('Batch {0}: {1}'.format(i+1, testCases[i]))
+        print('\nBatch {0}: {1}'.format(i+1, testCases[i]))
         try:
             p = Parser(testCases[i])
             p.parse()
