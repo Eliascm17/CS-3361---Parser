@@ -91,40 +91,66 @@ class Parser:
 		pass
 
 	def factor(self, level: int):
-		if self.tokens[self.currentTokenPosition] == 'lparen':
+		if self.match('lparen'):
 			self.print_with_indent('<lparen>', level)
 			self.print_with_indent('(', level + 1)
 			self.print_with_indent('</lparen>', level)
 			self.currentTokenPosition += 1
 			self.expr(level + 1)
-			if(self.tokens[self.currentTokenPosition] == 'rparen'):
+			if self.match('rparen'):
 				self.print_with_indent('<rparen>', level)
 				self.print_with_indent(')', level + 1)
 				self.print_with_indent('</rparen>', level)
 				self.currentTokenPosition += 1
+				return True
 			else:
 				raise Exception
 
-		elif self.tokens[self.currentTokenPosition] == 'id':
+		elif self.match('id'):
 			self.print_with_indent('<id>', level)
 			self.print_with_indent(self.tokenValues[self.currentTokenPosition], level + 1)
 			self.currentTokenPosition += 1
 			self.print_with_indent('</id>', level)
+			return True
 
-		elif self.tokens[self.currentTokenPosition] == 'number':
+		elif self.match('number'):
 			self.print_with_indent('<number>', level)
 			self.print_with_indent(self.tokenValues[self.currentTokenPosition], level + 1)
 			self.currentTokenPosition += 1
 			self.print_with_indent('</number>', level)
+			return True
 
-	def fact_tail(self):
+		return False
+
+	def fact_tail(self, level: int):
+		self.print_with_indent('<fact_tail>', level)
+		if self.mult_op(level + 1):
+			if self.factor(level + 1):
+				self.fact_tail(level + 1)
+			else:
+				raise Exception
+		self.print_with_indent('</fact_tail>', level)
 		pass
 
 	def add_op(self):
 		pass
 
 	def mult_op(self):
-		pass
+		if self.match('mult'):
+			self.print_with_indent('<times>', level)
+			self.print_with_indent('*', level + 1)
+			self.currentTokenPosition += 1
+			self.print_with_indent('</times>', level)
+			return True
+
+		elif self.match('div'):
+			self.print_with_indent('<div>', level)
+			self.print_with_indent('/', level + 1)
+			self.currentTokenPosition += 1
+			self.print_with_indent('</div>', level)
+			return True
+		
+		return False
 
 	# Returns true if the next value matches the value provided
 	def match(self, value):
