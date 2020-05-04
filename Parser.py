@@ -42,7 +42,7 @@ class Parser:
 				self.currentTokenPosition += 1
 			else:
 				raise Exception()
-			self.expr()
+			self.expr(level)
 
 		elif self.match('read'):
 			self.print_with_indent('<read>', level + 1)

@@ -71,7 +71,7 @@ class Scanner:
                                 self.tokens.append('mult')
                                 self.batchList.append('*')
                             elif self.a[k][i] == ':' and self.a[k][i+1] == '=':
-                                self.tokens.append('assignment')
+                                self.tokens.append('assign')
                                 self.batchList.append(':-')
                             elif self.a[k][i].isnumeric():
                                 try:
@@ -150,7 +150,7 @@ class Scanner:
                                     self.tokens.append('mult')
                                     self.batchList.append('*')
                                 elif token[i] == ':' and token[i+1] == '=':
-                                    self.tokens.append('assignment')
+                                    self.tokens.append('assign')
                                     self.batchList.append(':-')
                                 elif token[i].isnumeric():
                                     try:
