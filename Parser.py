@@ -58,7 +58,27 @@ class Parser:
 		pass
 
 	def factor(self):
-		pass
+	 	if self.tokens[self.currentTokenPosition] == 'lparen':
+            self.print_with_indent('<lparen>', level)
+            self.print_with_indent('(', level + 1)
+            self.print_with_indent('</lparen>', level)
+            self.currentTokenPosition += 1 # Where should this go?
+            self.expr(level + 1)
+            self.print_with_indent('<rparen>', level)
+            self.print_with_indent(')', level + 1)
+            self.print_with_indent('</rparen>', level)
+
+        elif self.tokens[self.currentTokenPosition] == 'id':
+            self.print_with_indent('<id>', level)
+            self.print_with_indent(self.tokenValues[self.currentTokenPosition], level + 1)
+            self.currentTokenPosition += 1
+            self.print_with_indent('</id>', level)
+
+        elif self.tokens[self.currentTokenPosition] == 'number':
+            self.print_with_indent('<number>', level)
+            self.print_with_indent(self.tokenValues[self.currentTokenPosition], level + 1)
+            self.currentTokenPosition += 1
+            self.print_with_indent('</number>', level)
 
 	def fact_tail(self):
 		pass
