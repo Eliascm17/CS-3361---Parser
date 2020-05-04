@@ -27,8 +27,14 @@ class Parser:
 
 	def __stmt__(self, level: int):
 		self.__print_with_indent__('<stmt>', level)
-		# Just so that we don't go into stack overflow
+		# If the next token is an id
+		if self.__match__('id'):
+			self.__print_with_indent__('<id>', level)
+			self.__print_with_indent__(self.tokenValues[self.currentTokenPosition], level + 1)
+			self.__print_with_indent__('</id>', level)
+		
 		self.currentTokenPosition += 1
+
 		self.__print_with_indent__('</stmt>', level)
 
 	def expr(self):
@@ -62,6 +68,15 @@ class Parser:
 
 	def mult_op(self):
 		pass
+
+	# Returns true if the next value matches the value provided
+	def __match__(self, value):
+		# If we are about to look ahead into out of bounds for the array, error out
+		try:
+			return self.tokens[self.currentTokenPosition + 1] == value
+		except:
+			return False
+
 
 	def __print_with_indent__(self, value, level: int):
 		print(level * '\t' + value)
