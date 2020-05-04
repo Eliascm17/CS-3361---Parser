@@ -136,8 +136,22 @@ class Parser:
 		self.print_with_indent('</fact_tail>', level)
 		pass
 
-	def add_op(self):
-		pass
+	def add_op(self, level: int):
+		if self.match('add'):
+			self.print_with_indent('<plus>', level)
+			self.print_with_indent('+', level + 1)
+			self.currentTokenPosition += 1
+			self.print_with_indent('</plus>', level)
+			return True
+		
+		elif self.match('minus'):
+			self.print_with_indent('<minus>', level)
+			self.print_with_indent('-', level + 1)
+			self.currentTokenPosition += 1
+			self.print_with_indent('</minus>', level)
+			return True
+
+		return False
 
 	def mult_op(self, level):
 		if self.match('mult'):
