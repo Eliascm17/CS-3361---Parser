@@ -45,14 +45,14 @@ class Parser:
 			self.expr()
 
 		elif self.match('read'):
-			self.print_with_indent('<read>', level)
-			self.print_with_indent(self.tokenValues[self.currentTokenPosition], level + 1)
-			self.print_with_indent('</read>', level)
+			self.print_with_indent('<read>', level + 1)
+			self.print_with_indent(self.tokenValues[self.currentTokenPosition], level + 2)
+			self.print_with_indent('</read>', level + 1)
 			self.currentTokenPosition += 1
 			if self.match('id'):
-				self.print_with_indent('<id>', level)
-				self.print_with_indent(self.tokenValues[self.currentTokenPosition], level + 1)
-				self.print_with_indent('</id>', level)
+				self.print_with_indent('<id>', level + 1)
+				self.print_with_indent(self.tokenValues[self.currentTokenPosition], level + 2)
+				self.print_with_indent('</id>', level + 1)
 				self.currentTokenPosition += 1
 			else:
 				raise Exception()
