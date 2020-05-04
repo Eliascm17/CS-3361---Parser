@@ -58,7 +58,7 @@ class Parser:
 		pass
 
 	def factor(self, level: int):
-	 	if self.tokens[self.currentTokenPosition] == 'lparen':
+		if self.tokens[self.currentTokenPosition] == 'lparen':
 			self.print_with_indent('<lparen>', level)
 			self.print_with_indent('(', level + 1)
 			self.print_with_indent('</lparen>', level)
@@ -69,7 +69,7 @@ class Parser:
 				self.print_with_indent(')', level + 1)
 				self.print_with_indent('</rparen>', level)
 				self.currentTokenPosition += 1
-			else
+			else:
 				raise Exception
 
 		elif self.tokens[self.currentTokenPosition] == 'id':
@@ -97,7 +97,7 @@ class Parser:
 	def match(self, value):
 		# If we are about to look ahead into out of bounds for the array, return false
 		try:
-			return self.tokens[self.currentTokenPosition + 1] == value
+			return self.tokens[self.currentTokenPosition] == value
 		except:
 			return False
 
