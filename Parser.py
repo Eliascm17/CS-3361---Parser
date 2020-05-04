@@ -5,6 +5,8 @@ class Parser:
     def __init__(self, a: List):
         self.s = Scanner(a)
         self.tokens = self.s.scan()
+        self.list = self.s.list()   
+
 
     def parse(self):
         

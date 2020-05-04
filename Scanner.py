@@ -11,6 +11,7 @@ class Scanner:
         # array of tokens that will be returned when Scanner.scan() runs
         # that hold the list of tokens in a batch
         self.tokens = []
+        self.batchList = []
         self.resetter = 0
 
     def scan(self):
@@ -35,8 +36,10 @@ class Scanner:
             elif (' ' not in self.a[k]) and self.commentOpen == False:
                 if self.a[k] == 'read':
                     self.tokens.append('read')
+                    self.batchList.append('read')
                 elif self.a[k] == 'write':
                     self.tokens.append('write')
+                    self.batchList.append('write')
                 else:
                     try:
 
@@ -44,10 +47,13 @@ class Scanner:
                             # print(self.a[k])
                             if self.a[k][i] == '(':
                                 self.tokens.append('lparen')
+                                self.batchList.append('(')
                             elif self.a[k][i] == ')':
                                 self.tokens.append('rparen')
+                                self.batchList.append(')')
                             elif self.a[k][i] == '+':
                                 self.tokens.append('plus')
+                                self.batchList.append('+')
                             elif self.a[k][i] == '-':
                                 try:
                                     check = float(self.a[k])
@@ -56,19 +62,24 @@ class Scanner:
                                             continue
                                 except:
                                     self.tokens.append('minus')
+                                    self.batchList.append('-')
                                     # print(self.a[k][i])
                             elif self.a[k][i] == '/':
                                 self.tokens.append('div')
+                                self.batchList.append('/')
                             elif self.a[k][i] == '*':
                                 self.tokens.append('mult')
+                                self.batchList.append('*')
                             elif self.a[k][i] == ':' and self.a[k][i+1] == '=':
                                 self.tokens.append('assignment')
+                                self.batchList.append(':-')
                             elif self.a[k][i].isnumeric():
                                 try:
                                     check = float(self.a[k])
                                     # '123', '-10', '2.34', etc
                                     if isinstance(check, float):
                                         self.tokens.append('number')
+                                        self.batchList.append(self.a[k])
                                         break
                                 except:
                                     if self.a[k].isalnum():
@@ -80,15 +91,18 @@ class Scanner:
 
                                     elif self.a[k].isnumeric():
                                         self.tokens.append('number')
+                                        self.batchList.append(self.a[k])
                                         break
                                     #do something here if element is a number ex 3.13)
                                     elif len(self.tokens) == 0 or self.tokens[-1] != 'number':
                                         self.tokens.append('number')
+                                        self.batchList.append(self.a[k])
                             # to identify if token is a valid id
                             elif self.a[k][i].isalpha():
                                 #do something here if element is a letter (A-Z,a-z,1-9)
                                 if self.a[k].isalnum():
                                     self.tokens.append('id')
+                                    self.batchList.append(self.a[k])
                                     break
                                 else:
                                     raise ValueError('error')
@@ -104,17 +118,22 @@ class Scanner:
                     for token in tokens:
                         if token == 'read':
                             self.tokens.append('read')
+                            self.batchList.append('read')
                         elif token == 'write':
                             self.tokens.append('write')
+                            self.batchList.append('write')
                         #identify what the a specific index in the token is
                         else:
                             for i in range(len(token)):
                                 if token[i] == '(':
                                     self.tokens.append('lparen')
+                                    self.batchList.append('(')
                                 elif token[i] == ')':
                                     self.tokens.append('rparen')
+                                    self.batchList.append(')')
                                 elif token[i] == '+':
                                     self.tokens.append('plus')
+                                    self.batchList.append('+')
                                 elif token[i] == '-':
                                     check = float(token)
                                     if isinstance(check, float):
@@ -122,18 +141,23 @@ class Scanner:
                                             continue
                                     else:
                                         self.tokens.append('minus')
+                                        self.batchList.append('-')
                                 elif token[i] == '/':
                                     self.tokens.append('div')
+                                    self.batchList.append('/')
                                 elif token[i] == '*':
                                     self.tokens.append('mult')
+                                    self.batchList.append('*')
                                 elif token[i] == ':' and token[i+1] == '=':
                                     self.tokens.append('assignment')
+                                    self.batchList.append(':-')
                                 elif token[i].isnumeric():
                                     try:
                                         check = float(token)
                                         # '123', '-10', '2.34', etc
                                         if isinstance(check, float):
                                             self.tokens.append('number')
+                                            self.batchList.append(token[i])
                                             break
 
                                     except:
@@ -143,15 +167,18 @@ class Scanner:
 
                                         elif token.isnumeric():
                                             self.tokens.append('number')
+                                            self.batchList.append(token)
                                             break
                                         #do something here if element is a number ex 3.13)
                                         elif len(self.tokens) == 0 or self.tokens[-1] != 'number':
                                             self.tokens.append('number')
+                                            self.batchList.append(token)
                                 # to identify if token is a valid id
                                 elif token[i].isalpha():
                                     #do something here if element is a letter (A-Z,a-z,1-9)
                                     if token.isalnum():
                                         self.tokens.append('id')
+                                        self.batchList.append(token)
                                         break
                                     else:
                                         raise ValueError('error')
@@ -159,3 +186,6 @@ class Scanner:
                     print('error')
 
         return(self.tokens)
+
+    def list(self):
+        return self.batchList
