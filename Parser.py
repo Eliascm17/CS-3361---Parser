@@ -70,8 +70,8 @@ class Parser:
 
 	def expr(self, level):
 		self.print_with_indent('<expr>', level)
-		self.term()
-		self.term_tail()
+		self.term(level + 1)
+		self.term_tail(level + 1)
 		self.print_with_indent('</expr>', level)
 
 	def term(self, level: int):
