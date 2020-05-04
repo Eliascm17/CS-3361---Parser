@@ -10,26 +10,32 @@ class Parser:
 	   
 	def parse(self): 
 		print('token list: {0}'.format(self.tokens[:]))
-		self.__program__(0)
+		self.program(0)
 	
-	def __program__(self, level: int):
-		self.__print_with_indent__('<program>', level)
-		self.__stmt_list__(level + 1)
-		self.__print_with_indent__('</program>', level)
+	def program(self, level: int):
+		self.print_with_indent('<program>', level)
+		self.stmt_list(level + 1)
+		self.print_with_indent('</program>', level)
 
-	def __stmt_list__(self, level: int):
-		self.__print_with_indent__('<stmt_list>', level)
+	def stmt_list(self, level: int):
+		self.print_with_indent('<stmt_list>', level)
 		# If there is still something left to read
 		if self.currentTokenPosition < len(self.tokenValues):
-			self.__stmt__(level + 1)
-			self.__stmt_list__(level + 1)
-		self.__print_with_indent__('</stmt_list>', level)
+			self.stmt(level + 1)
+			self.stmt_list(level + 1)
+		self.print_with_indent('</stmt_list>', level)
 
-	def __stmt__(self, level: int):
-		self.__print_with_indent__('<stmt>', level)
-		# Just so that we don't go into stack overflow
+	def stmt(self, level: int):
+		self.print_with_indent('<stmt>', level)
+		# If the next token is an id
+		if self.match('id'):
+			self.print_with_indent('<id>', level)
+			self.print_with_indent(self.tokenValues[self.currentTokenPosition], level + 1)
+			self.print_with_indent('</id>', level)
+		
 		self.currentTokenPosition += 1
-		self.__print_with_indent__('</stmt>', level)
+
+		self.print_with_indent('</stmt>', level)
 
 	def expr(self):
 		pass
@@ -63,5 +69,14 @@ class Parser:
 	def mult_op(self):
 		pass
 
-	def __print_with_indent__(self, value, level: int):
+	# Returns true if the next value matches the value provided
+	def match(self, value):
+		# If we are about to look ahead into out of bounds for the array, return false
+		try:
+			return self.tokens[self.currentTokenPosition + 1] == value
+		except:
+			return False
+
+
+	def print_with_indent(self, value, level: int):
 		print(level * '\t' + value)
