@@ -137,7 +137,7 @@ class Parser:
 		self.print_with_indent('</fact_tail>', level)
 
 	def add_op(self, level: int):
-		if self.match('add'):
+		if self.match('plus'):
 			self.print_with_indent('<plus>', level)
 			self.print_with_indent('+', level + 1)
 			self.currentTokenPosition += 1
